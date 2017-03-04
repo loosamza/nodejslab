@@ -1,0 +1,17 @@
+{
+  "name": "nodelab",
+  "version": "1.0.0",
+  "description": "My first NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Piyapat Plydaung",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.0",
+    "body-parser": "latest",
+    "mongodb": "latest",
+    "mustache-express": "latest"
+  }
+}
