@@ -2,53 +2,109 @@
 
 <head>
   <title>My Page</title>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+  <link rel="stylesheet" href="/bower_components/bulma/css/bulma.css">
   <link rel="stylesheet" href="css/style.css">
-
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
 
 </head>
 
 <body>
-<nav class="navbar navbg">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Brand</a>
+
+  <div class="container">
+    <section class="hero is-warning">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title has-text-centered">
+            POST IT
+          </h1>
+          <h2 class="subtitle has-text-centered">
+            Don't forget your memories.
+          </h2>
+        </div>
+      </div>
+    </section>
+    <br>
+    <div class="notification">
+      <nav class="level nav-border">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="title">
+              <div class="img-cruve">
+                <p class="image is-64x64">
+                  <img src="https://instagram.fbkk5-2.fna.fbcdn.net/t51.2885-19/s150x150/15624103_231223717301469_691266417831444480_a.jpg">
+                </p>
+              </div>
+            </p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Following</p>
+            <p class="title">3</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Followers</p>
+            <p class="title">33</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Likes</p>
+            <p class="title">333</p>
+          </div>
+        </div>
+      </nav>
+      <div class="columns is-multiline is-mobile">
+        {{#items}}
+        <div class="column is-one-third">
+         <!-- <p class="notification is-info has-text-centered">{{actName}}</p>-->
+         {{{actColor}}}{{actName}}</p>
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Content
+              </p>
+
+            </header>
+            <div class="card-content">
+              <div class="content">
+                {{actContent}}
+                <br>
+                <small>{{actTime}} - {{actDate}}</small>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a class="card-footer-item"><span class="icon is-small"><i class="fa fa-reply"></i></span></a>
+              <a class="card-footer-item"><span class="icon is-small"><i class="fa fa-retweet"></i></span></a>
+              <a class="card-footer-item"><span class="icon is-small"><i class="fa fa-heart"></i></span></a>
+            </footer>
+          </div>
+        </div>
+        {{/items}}
+      </div>
     </div>
-
-   
-  </div><!-- /.container-fluid -->
-</nav>
-
-<div class="row">
-  <div class="col-xs-6 col-md-3">
-    <a href="#" class="thumbnail">
-      <img src={{imgPath}}>
-    </a>
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            <strong>Web Application</strong> by <a href="https://www.facebook.com/piyapat.plydaungiii">Piyapat Plydaung</a>
+          </p>
+          <p>
+            <a class="icon" href="https://github.com/loosamza">
+              <i class="fa fa-github"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
   </div>
-  
-</div>
 
-<form method="POST" action="/horoscope">
-<input type="text" name="pass"/>
-<button type="submit" class="btn btn-default">Submit</button>
-</form>
-         
-       
+
+
+
 </body>
 
 </html>
