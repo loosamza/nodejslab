@@ -5,9 +5,15 @@
     overflow: hidden;
     position: relative;
 }
-.nav-border{
+.nav-border-y {
     border: 1px solid #ffdd57;
     padding : 10px;
+    border-radius: 2px;
+}
+.nav-border-g {
+    border: 1px solid #00d1b2;
+    padding : 10px;
+    border-radius: 2px;
 }
 
 body {

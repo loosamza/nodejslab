@@ -9,6 +9,7 @@ console.log('Server running at http://127.0.0.1:1337/');
 var express = require('express');
 // Convert body to format you need.
 var bodyParser = require('body-parser');
+
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -26,27 +27,39 @@ app.get('/', function (req, res) {
   res.send('Hello NodeJS');
 })
 
-function getImagePath() {
-  return 'http://wallpaper-gallery.net/images/image/image-13.jpg';
-}
 
-function getPostIt() {
-  var data = [];
-  var isColor = ['is-primary','is-info','is-success','is-warning','is-danger'];
+
+
+function getPostIt(response) {
+
+  var isColor = ['is-primary', 'is-info', 'is-success', 'is-warning', 'is-danger'];
   var isColorIdx = 0;
-  for (var i = 0; i < 6; i++) {
-    if(isColorIdx > 4){
+  for (var i = 0; i < response.length; i++) {
+    if (isColorIdx > 4) {
       isColorIdx = 0;
     }
-    data.push({
-      actName: 'First NodeJS Day ' + (i + 1),
-      actContent: 'เขียน NodeJS ครั้งแรก',
+    response[i].actDate = formatDate(d);
+    response[i].actTime = d.toLocaleTimeString();
+    response[i].actColor = '<p class="notification ' + isColor[isColorIdx] + ' has-text-centered">'
+    /*data[i].actDate = {
       actDate: formatDate(d),
       actTime: d.toLocaleTimeString(),
-      actColor: '<p class="notification '+ isColor[isColorIdx] +' has-text-centered">'
-    });
+      actColor: '<p class="notification ' + isColor[isColorIdx] + ' has-text-centered">'
+    };*/
     isColorIdx++;
   }
+  return response;
+}
+
+function postIt(name, content) {
+  var isColor = ['is-primary', 'is-info', 'is-success', 'is-warning', 'is-danger'];
+  data.push({
+    actName: name,
+    actContent: content,
+    actDate: formatDate(d),
+    actTime: d.toLocaleTimeString(),
+    actColor: '<p class="notification ' + isColor[0] + ' has-text-centered">'
+  });
   return data;
 }
 
@@ -61,21 +74,93 @@ function formatDate(date) {
 
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
-app.post('/horoscope', function (req, res) {
+var MongoClient = require('mongodb').MongoClient;
+var dbUrl = "mongodb://localhost:27017/horoscope";
+var ObjectID = require('mongodb').ObjectID;
+
+function addData(value, callback) {
+  MongoClient.connect(dbUrl, function (err, db) {
+    if (err) callback(err);
+    var id = new ObjectID();
+    value["_id"] = id.toHexString();
+    db.collection('data')
+      .insert(value, function (err, result) {
+        db.close();
+        if (err) callback(err);
+        callback(result);
+      });
+
+  });
+}
+
+function callData(callback) {
+  MongoClient.connect(dbUrl, function (err, db) {
+    db.collection('data').find().toArray(function (err, result) {
+      db.close();
+      if (err) callback(err);
+      callback(result);
+     
+    });
+  });
+}
+
+
+
+app.post('/data/add', function (req, res) {
+  console.log('Activity Name : ', req.body.actName);
+  console.log('Content : ', req.body.actContent);
+  addData(req.body, function (result) {
+    res.send(req.body);
+    console.log('done');
+  });
+
+
+})
+
+app.get('/horoscope', function (req, res) {
 
   res.render('horoscope', {
-    text: req.body.pass
+
   });
+
 })
 var d = new Date();
 
 
-var actArr = getPostIt();
-console.log(actArr);
+
 app.get('/mypage', function (req, res) {
-  res.render('mypage', {
-    items: actArr
+  var data = [];
+   callData(function (response) {
+
+    var isColor = ['is-primary', 'is-info', 'is-success', 'is-warning', 'is-danger'];
+    var isColorIdx = 0;
+    for (var i = 0; i < response.length; i++) {
+      if (isColorIdx > 4) {
+        isColorIdx = 0;
+      }
+      response[i].actDate = formatDate(d);
+      response[i].actTime = d.toLocaleTimeString();
+      response[i].actColor = '<p class="notification ' + isColor[isColorIdx] + ' has-text-centered">'
+      isColorIdx++;
+    }
+    console.log('res',JSON.stringify(response));
+    data = response;
+    res.render('mypage', {items:response});
+    return response;
+     
   });
+
+  console.log('data',data);
+ 
 })
+
+app.post('/call', function (req, res) {
+  console.log('Activity Name : ', req.body.actName);
+  console.log('Content : ', req.body.actContent);
+  res.render('mypage', {
+    items: postIt(req.body.actName, req.body.actContent)
+  });
+  //console.log(JSON.stringify(data));
+});
 app.listen(3000);
 console.log('Server Running...');
