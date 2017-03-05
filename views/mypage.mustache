@@ -28,7 +28,7 @@
     </section>
     <br>
     <div class="notification">
-      <nav class="level nav-border-y">
+      <nav class="level nav-border-g">
         <div class="level-item has-text-centered">
           <div>
             <p class="title">
@@ -40,42 +40,42 @@
             </p>
           </div>
         </div>
-        <div class="level-item has-text-centered">
+        <div class="level-item has-text-centered ">
           <div>
-            <p class="heading">Following</p>
-            <p class="title">3</p>
+            <p class="heading">Post it counter</p>
+            <p class="title">{{count}}</p>
           </div>
         </div>
-        <div class="level-item has-text-centered">
+        <div class="level-item has-text-centered ">
           <div>
-            <p class="heading">Followers</p>
-            <p class="title">33</p>
+            <p class="heading">Like</p>
+            <p class="title">0</p>
           </div>
         </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Likes</p>
-            <p class="title">333</p>
-          </div>
-        </div>
+        
       </nav>
       {{text.actName}}
       <div class="nav-border-g" ng-controller="Ctrl">
-      <span ng-bind="yourName"></span>
-        <label class="label">Activity</label>
-        <p class="control">
-          <input ng-model="model.actName" class="input is-hovered" type="text" placeholder="Activity name ...">
-        </p>
-        <label class="label">Content</label>
-        <p class="control">
-          <textarea ng-model="model.actContent" class="textarea is-hovered" placeholder="Content ..."></textarea>
-        </p>
-        <div class="control is-grouped">
-          <p class="control ">
-            <button class="button is-primary right" ng-click="submit(model)">POST IT</button>
+        <form name="actForm" ng-submit="submit(model)" novalidate>
+          <label class="label">Activity</label>
+          <div>
+            <p class="control">
+              <input ng-class="{'is-danger' : actForm.actName.$invalid && !actForm.actName.$pristine}" ng-model="model.actName" name="actName"
+                class="input is-hovered" type="text" placeholder="Activity name ..." required>
+            </p>
+          </div>
+          <label class="label">Content</label>
+          <p class="control">
+            <textarea ng-class="{'is-danger' : actForm.actContent.$invalid && !actForm.actContent.$pristine}" ng-model="model.actContent"
+              name="actContent" class="textarea is-hovered" placeholder="Content ..." required></textarea>
           </p>
-          
-        </div>
+          <div class="control is-grouped">
+            <p class="control ">
+              <button class="button is-primary" ng-class="{'is-disabled':actForm.$invalid}">POST IT</button>
+            </p>
+
+          </div>
+        </form>
       </div>
       <br>
       <div class="columns is-multiline is-mobile">
@@ -84,13 +84,19 @@
           <!-- <p class="notification is-info has-text-centered">{{actName}}</p>-->
           {{{actColor}}}{{actName}}</p>
           <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                Content
-              </p>
 
-            </header>
             <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image" style="height: 40px; width: 40px;">
+                    <img src="https://instagram.fbkk5-2.fna.fbcdn.net/t51.2885-19/s150x150/15624103_231223717301469_691266417831444480_a.jpg" alt="Image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p class="title is-4">Piyapat Plydaung</p>
+                  <p class="subtitle is-6">@piayaptiii</p>
+                </div>
+              </div>
               <div class="content">
                 {{actContent}}
                 <br>

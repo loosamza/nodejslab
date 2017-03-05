@@ -109,9 +109,12 @@ function callData(callback) {
 app.post('/data/add', function (req, res) {
   console.log('Activity Name : ', req.body.actName);
   console.log('Content : ', req.body.actContent);
+  req.body.actDate = formatDate(d);
+  req.body.actTime = d.toLocaleTimeString();
   addData(req.body, function (result) {
     res.send(req.body);
     console.log('done');
+    
   });
 
 
@@ -138,19 +141,19 @@ app.get('/mypage', function (req, res) {
       if (isColorIdx > 4) {
         isColorIdx = 0;
       }
-      response[i].actDate = formatDate(d);
-      response[i].actTime = d.toLocaleTimeString();
+      //response[i].actDate = formatDate(d);
+      //response[i].actTime = d.toLocaleTimeString();
       response[i].actColor = '<p class="notification ' + isColor[isColorIdx] + ' has-text-centered">'
       isColorIdx++;
     }
-    console.log('res',JSON.stringify(response));
+    //console.log('res',JSON.stringify(response));
     data = response;
-    res.render('mypage', {items:response});
+    res.render('mypage', {items:response,count:response.length});
     return response;
      
   });
 
-  console.log('data',data);
+
  
 })
 

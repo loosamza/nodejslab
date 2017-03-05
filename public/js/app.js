@@ -1,6 +1,6 @@
 var app = angular.module('myApp', []);
 
-app.controller('Ctrl', function ($scope, $http) {
+app.controller('Ctrl', function ($scope, $http, $window) {
         $scope.angTxt = "Hello";
         console.log('Hello im working now');
         $scope.post = function (model) {
@@ -23,6 +23,7 @@ app.controller('Ctrl', function ($scope, $http) {
 
                 function successCallback(response) {
                         console.log('success');
+                        $window.location.reload();
                 }
 
                 function errorCallback(error) {
